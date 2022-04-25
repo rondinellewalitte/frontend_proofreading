@@ -3,13 +3,17 @@ import { Input } from '../components/Form/Input'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useRouter } from 'next/router';
+import { useMutation } from 'react-query';
+import { api } from '../services/api';
+import { queryClient } from '../services/queryClient';
 
 type SignUpFormData = {
   username: string;
   email: string;
   password: string;
   password_confirmation: string;
-  word_secrect: string;
+  word_secret: string;
 }
 
 const signUpFormSchema = yup.object().shape({
@@ -19,20 +23,31 @@ const signUpFormSchema = yup.object().shape({
   password_confirmation: yup.string().oneOf([
     null, yup.ref("password")
   ], "As senhas precisam ser iguais"),
-  word_secrect: yup.string().required("Palavra secreta obrigatório"),
+  word_secret: yup.string().required("Palavra secreta obrigatório"),
 })
 
 
 export default function SignUp() {
+
+  const router = useRouter();
+
+  const createUser = useMutation(async (user: SignUpFormData) => {
+    const response = await api.post("/client", user)
+    return response.data.user;
+  }, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('users')
+    }
+  })
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(signUpFormSchema)
   })
 
   const handleSignUp: SubmitHandler<SignUpFormData> = async (values) => {
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await createUser.mutateAsync(values);
 
-    console.log(values);
+    router.push('/')
   }
 
   const { errors } = formState
@@ -83,10 +98,11 @@ export default function SignUp() {
             {...register('password_confirmation')}
           />
           <Input
-            name="word_secrect"
+            name="word_secret"
+            type="password"
             label="Palavra secreta"
-            error={errors.word_secrect}
-            {...register('word_secrect')}
+            error={errors.word_secret}
+            {...register('word_secret')}
           />
         </Stack>
         <Button

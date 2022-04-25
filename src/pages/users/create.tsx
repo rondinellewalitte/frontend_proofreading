@@ -34,7 +34,6 @@ export default function CreateUser() {
   const router = useRouter();
 
   const createUser = useMutation(async (user: CreateUserFormData) => {
-    console.log(user)
     const response = await api.post("/client", user)
     return response.data.user;
   }, {
