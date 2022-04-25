@@ -6,33 +6,51 @@ import { Sidebar } from "../../components/Sidebar";
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useMutation } from "react-query"
+import { api } from "../../services/api";
+import { queryClient } from "../../services/queryClient";
+import { useRouter } from "next/router";
 
 type CreateUserFormData = {
-  name: string;
+  username: string;
   email: string;
   password: string;
   password_confirmation: string;
+  word_secret: string;
 }
 
 const createUserFormSchema = yup.object().shape({
-  name: yup.string().required("Nome obrigatório"),
+  username: yup.string().required("Nome obrigatório"),
   email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
   password: yup.string().required("Senha obrigatório").min(6, "No mínimo 6 caracteres"),
   password_confirmation: yup.string().oneOf([
     null, yup.ref("password")
-  ], "As senhas precisam ser iguais")
+  ], "As senhas precisam ser iguais"),
+  word_secret: yup.string().required("Palavra secreta obrigatório"),
 })
 
 export default function CreateUser() {
+
+  const router = useRouter();
+
+  const createUser = useMutation(async (user: CreateUserFormData) => {
+    console.log(user)
+    const response = await api.post("/client", user)
+    return response.data.user;
+  }, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('users')
+    }
+  })
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(createUserFormSchema)
   })
 
   const handleCreateUser: SubmitHandler<CreateUserFormData> = async (values) => {
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await createUser.mutateAsync(values);
 
-    console.log(values);
+    router.push('/users')
   }
 
   const { errors } = formState
@@ -64,10 +82,10 @@ export default function CreateUser() {
           <VStack spacing="8">
             <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
               <Input
-                name="name"
+                name="username"
                 label="Nome Completo"
-                error={errors.name}
-                {...register('name')}
+                error={errors.username}
+                {...register('username')}
               />
               <Input
                 name="email"
@@ -92,6 +110,15 @@ export default function CreateUser() {
                 label="Confirmação de senha"
                 error={errors.password_confirmation}
                 {...register('password_confirmation')}
+              />
+            </SimpleGrid>
+            <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
+              <Input
+                name="word_secret"
+                type="password"
+                label="Palavra secreta"
+                error={errors.word_secret}
+                {...register('word_secret')}
               />
             </SimpleGrid>
           </VStack>
