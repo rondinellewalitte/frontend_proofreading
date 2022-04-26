@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import { withSRRGuest } from '../utils/withSRRGuest';
 
 type SignInFormData = {
   email: string;
@@ -85,3 +86,9 @@ export default function SignIn() {
     </Flex>
   )
 }
+
+export const getServerSideProps = withSRRGuest(async (ctx) => {
+  return {
+    props: {}
+  }
+});

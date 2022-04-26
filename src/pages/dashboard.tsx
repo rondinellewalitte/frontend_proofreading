@@ -1,7 +1,11 @@
 import { Box, Flex, SimpleGrid, Text, theme } from "@chakra-ui/react";
+import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
+import { parseCookies } from "nookies";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
+import { withSRRAuth } from "../utils/withSRRAuth";
+
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false, })
 
@@ -66,6 +70,7 @@ const series = [
 ];
 
 export default function Dashboard() {
+
   return (
     <Flex direction="column" h="100vh">
       <Header />
@@ -100,3 +105,11 @@ export default function Dashboard() {
     </Flex>
   )
 }
+
+export const getServerSideProps = withSRRAuth(async (ctx) => {
+  return {
+    props: {}
+  }
+})
+
+

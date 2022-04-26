@@ -2,6 +2,7 @@ import { Box, Button, Divider, Flex, Heading, HStack, SimpleGrid, VStack, Select
 import { Input } from "../../components/Form/Input";
 import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
+import { withSRRAuth } from "../../utils/withSRRAuth";
 
 export default function CreateSchool() {
   return (
@@ -37,3 +38,9 @@ export default function CreateSchool() {
     </Box>
   );
 }
+
+export const getServerSideProps = withSRRAuth(async (ctx) => {
+  return {
+    props: {}
+  }
+})

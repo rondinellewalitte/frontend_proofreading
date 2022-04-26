@@ -6,6 +6,7 @@ import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
 import { useUsers } from "../../services/hooks/useUsers";
+import { withSRRAuth } from "../../utils/withSRRAuth";
 
 export default function UserList() {
   const [page, setPage] = useState(1);
@@ -108,3 +109,9 @@ export default function UserList() {
     </Box>
   );
 }
+
+export const getServerSideProps = withSRRAuth(async (ctx) => {
+  return {
+    props: {}
+  }
+})

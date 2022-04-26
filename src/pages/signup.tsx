@@ -5,8 +5,9 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
-import { api } from '../services/api';
+import { api } from '../services/apiClient';
 import { queryClient } from '../services/queryClient';
+import { withSRRGuest } from '../utils/withSRRGuest';
 
 type SignUpFormData = {
   username: string;
@@ -117,3 +118,9 @@ export default function SignUp() {
     </Flex>
   )
 }
+
+export const getServerSideProps = withSRRGuest(async (ctx) => {
+  return {
+    props: {}
+  }
+});

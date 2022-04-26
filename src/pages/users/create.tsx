@@ -7,9 +7,10 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useMutation } from "react-query"
-import { api } from "../../services/api";
+import { api } from "../../services/apiClient";
 import { queryClient } from "../../services/queryClient";
 import { useRouter } from "next/router";
+import { withSRRAuth } from "../../utils/withSRRAuth";
 
 type CreateUserFormData = {
   username: string;
@@ -134,3 +135,9 @@ export default function CreateUser() {
     </Box>
   );
 }
+
+export const getServerSideProps = withSRRAuth(async (ctx) => {
+  return {
+    props: {}
+  }
+})
