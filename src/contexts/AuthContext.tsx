@@ -9,7 +9,7 @@ type SignInCredentials = {
 }
 
 type AuthContextData = {
-  signIn(credentials: SignInCredentials): Promise<void>;
+  signIn(credentials: SignInCredentials): Promise<{}>;
   signOut(): void;
   isAuthenticated: boolean;
   user: User;
@@ -100,8 +100,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
       api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
       Router.push('/dashboard');
+      return { status: "success", message: 'OK' }
     } catch (err) {
-      console.log(err);
+      if (!err.response) {
+        return { status: "error", message: 'Api not Found!' }
+      }
+      const error = err.response.data;
+      return error
     }
   }
 

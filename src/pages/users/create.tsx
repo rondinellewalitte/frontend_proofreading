@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Flex, Heading, HStack, SimpleGrid, VStack } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Divider, Flex, Heading, HStack, SimpleGrid, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import { Input } from "../../components/Form/Input";
 import { Header } from "../../components/Header";
@@ -11,6 +11,7 @@ import { api } from "../../services/apiClient";
 import { queryClient } from "../../services/queryClient";
 import { useRouter } from "next/router";
 import { withSRRAuth } from "../../utils/withSRRAuth";
+import { useState } from "react";
 
 type CreateUserFormData = {
   username: string;
@@ -35,8 +36,10 @@ export default function CreateUser() {
   const router = useRouter();
 
   const createUser = useMutation(async (user: CreateUserFormData) => {
-    const response = await api.post("/client", user)
-    return response.data.user;
+    const response = await api.post("/client", user).catch((error: any) => {
+      return error.response;
+    })
+    return response;
   }, {
     onSuccess: () => {
       queryClient.invalidateQueries('users')
@@ -47,13 +50,23 @@ export default function CreateUser() {
     resolver: yupResolver(createUserFormSchema)
   })
 
-  const handleCreateUser: SubmitHandler<CreateUserFormData> = async (values) => {
-    await createUser.mutateAsync(values);
+  const [err, setErr] = useState({ status: "", message: "", open: false });
 
-    router.push('/users')
+  const handleCreateUser: SubmitHandler<CreateUserFormData> = async (values) => {
+    const response = await createUser.mutateAsync(values);
+
+    const { status, message } = response.data
+
+    setErr({ status, message, open: true });
+
+    if (status === 'success') {
+      router.push('/users')
+    }
   }
 
   const { errors } = formState
+
+
 
   return (
     <Box>
@@ -132,6 +145,28 @@ export default function CreateUser() {
           </Flex>
         </Box>
       </Flex>
+      {!!err.status && (err.status !== "success" ?
+        <Alert
+          status='error'
+          variant='solid'
+          width={["80"]}
+          pos="absolute" bottom="5" left="5"
+        >
+          <AlertIcon />
+          <AlertTitle textColor="white">{err.status}</AlertTitle>
+          <AlertDescription textColor="white">{err.message}</AlertDescription>
+        </Alert> :
+        <Alert
+          status='success'
+          variant='solid'
+          width={["80"]}
+          pos="absolute" bottom="5" left="5"
+        >
+          <AlertIcon />
+          <AlertTitle textColor="white">{err.status}</AlertTitle>
+          <AlertDescription textColor="white">{err.message}</AlertDescription>
+        </Alert>
+      )}
     </Box>
   );
 }

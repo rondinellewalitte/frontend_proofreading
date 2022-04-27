@@ -1,4 +1,4 @@
-import { Flex, Button, Stack } from '@chakra-ui/react'
+import { Flex, Button, Stack, Alert, AlertIcon, AlertTitle, AlertDescription } from '@chakra-ui/react'
 import { Input } from '../components/Form/Input'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from "yup";
@@ -8,6 +8,7 @@ import { useMutation } from 'react-query';
 import { api } from '../services/apiClient';
 import { queryClient } from '../services/queryClient';
 import { withSRRGuest } from '../utils/withSRRGuest';
+import { useState } from 'react';
 
 type SignUpFormData = {
   username: string;
@@ -33,8 +34,10 @@ export default function SignUp() {
   const router = useRouter();
 
   const createUser = useMutation(async (user: SignUpFormData) => {
-    const response = await api.post("/client", user)
-    return response.data.user;
+    const response = await api.post("/client", user).catch((error: any) => {
+      return error.response;
+    })
+    return response;
   }, {
     onSuccess: () => {
       queryClient.invalidateQueries('users')
@@ -45,10 +48,18 @@ export default function SignUp() {
     resolver: yupResolver(signUpFormSchema)
   })
 
-  const handleSignUp: SubmitHandler<SignUpFormData> = async (values) => {
-    await createUser.mutateAsync(values);
+  const [err, setErr] = useState({ status: "", message: "", open: false });
 
-    router.push('/')
+  const handleSignUp: SubmitHandler<SignUpFormData> = async (values) => {
+    const response = await createUser.mutateAsync(values);
+
+    const { status, message } = response.data
+
+    setErr({ status, message, open: true });
+
+    if (status === 'success') {
+      router.push('/')
+    }
   }
 
   const { errors } = formState
@@ -115,6 +126,28 @@ export default function SignUp() {
           Criar
         </Button>
       </Flex>
+      {!!err.status && (err.status !== "success" ?
+        <Alert
+          status='error'
+          variant='solid'
+          width={["80"]}
+          pos="absolute" bottom="5" left="5"
+        >
+          <AlertIcon />
+          <AlertTitle textColor="white">{err.status}</AlertTitle>
+          <AlertDescription textColor="white">{err.message}</AlertDescription>
+        </Alert> :
+        <Alert
+          status='success'
+          variant='solid'
+          width={["80"]}
+          pos="absolute" bottom="5" left="5"
+        >
+          <AlertIcon />
+          <AlertTitle textColor="white">{err.status}</AlertTitle>
+          <AlertDescription textColor="white">{err.message}</AlertDescription>
+        </Alert>
+      )}
     </Flex>
   )
 }

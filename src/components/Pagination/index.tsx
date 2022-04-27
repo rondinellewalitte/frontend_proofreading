@@ -34,8 +34,6 @@ export function Pagination({
     ? generatePagesArray(currentPage, Math.min(currentPage + siblingsCount, lastPage))
     : []
 
-  console.log(lastPage);
-
   return (
     <Stack
       direction={["column", "row"]}

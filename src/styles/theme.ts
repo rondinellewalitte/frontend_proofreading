@@ -21,9 +21,6 @@ export const theme = extendTheme({
   },
   styles: {
     global: {
-      option: {
-        background: "#1f2029!important",
-      },
       body: {
         bg: 'gray.900',
         color: 'gray.50',

@@ -84,7 +84,6 @@ export default function Dashboard() {
         px="6"
       >
         <Sidebar />
-        <Button onClick={signOut}>teste</Button>
         <SimpleGrid flex="1" gap="4" minChildWidth="320px" align="flex-start">
           <Box
             p={["6", "8"]}
