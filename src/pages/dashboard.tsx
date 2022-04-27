@@ -1,9 +1,9 @@
-import { Box, Flex, SimpleGrid, Text, theme } from "@chakra-ui/react";
-import { GetServerSideProps } from "next";
+import { Box, Button, Flex, SimpleGrid, Text, theme } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
-import { parseCookies } from "nookies";
+import { useContext } from "react";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
+import { AuthContext } from "../contexts/AuthContext";
 import { withSRRAuth } from "../utils/withSRRAuth";
 
 
@@ -71,6 +71,8 @@ const series = [
 
 export default function Dashboard() {
 
+  const { user, signOut } = useContext(AuthContext);
+
   return (
     <Flex direction="column" h="100vh">
       <Header />
@@ -82,6 +84,7 @@ export default function Dashboard() {
         px="6"
       >
         <Sidebar />
+        <Button onClick={signOut}>teste</Button>
         <SimpleGrid flex="1" gap="4" minChildWidth="320px" align="flex-start">
           <Box
             p={["6", "8"]}
