@@ -51,6 +51,8 @@ export default function CreateRoom() {
             <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
               <AsyncSelect
                 cacheOptions
+                id="selectbox"
+                instanceId="selectbox"
                 autoFocus={true}
                 loadOptions={callApi}
                 onChange={(data) => {
