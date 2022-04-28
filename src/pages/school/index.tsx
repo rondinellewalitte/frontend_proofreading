@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { api } from "../../services/apiClient";
 import { queryClient } from "../../services/queryClient";
 import Link from "next/link";
+import delayTime from "../../utils/delayTime";
 
 type CreateSchoolFormData = {
   school: string;
@@ -55,7 +56,6 @@ export default function CreateSchool() {
   }
 
   const { errors } = formState;
-
 
   return (
     <Box>
