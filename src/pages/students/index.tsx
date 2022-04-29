@@ -1,4 +1,4 @@
-import { Box, Button, Text, Divider, Flex, Heading, HStack, SimpleGrid, VStack, Alert, AlertDescription, AlertTitle, AlertIcon } from "@chakra-ui/react";
+import { Box, Button, Text, Divider, Flex, Heading, HStack, SimpleGrid, VStack, Alert, AlertDescription, AlertTitle, AlertIcon, Select } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
 import { withSRRAuth } from "../../utils/withSRRAuth";
@@ -14,7 +14,7 @@ import { api } from "../../services/apiClient";
 import { TextArea } from "../../components/Form/TextArea";
 
 type CreateStudentsFormData = {
-  student_name: [string];
+  alunos: string;
 }
 
 const createRoomFormSchema = yup.object().shape({
@@ -23,52 +23,64 @@ const createRoomFormSchema = yup.object().shape({
 
 export default function CreateStudents() {
 
-  const [isActive, setisActive] = useState(false);
-
-
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(createRoomFormSchema)
   })
 
-  const INITIAL_DATA = {
-    value: 0,
-    label: 'Selecione o usuário',
-  };
+  const INITIAL_DATA_SCHOOLS = {
+    value: "0",
+    label: 'Selecione a escola',
+  }
 
-  const [selectData, setselectData] = useState(INITIAL_DATA);
-  const [selectData2, setselectData2] = useState(INITIAL_DATA);
+  const INITIAL_DATA_ROOMS = {
+    value: "0",
+    label: 'Selecione a turma',
+  }
 
+  const [listofSchools, setlistofSchools] = useState([INITIAL_DATA_SCHOOLS]);
+  const [listofRooms, setlistofRooms] = useState([INITIAL_DATA_ROOMS]);
 
-  const mapResponseToValuesAndLabels = (data) => ({
+  const [selectedSchool, setselectedSchool] = useState(INITIAL_DATA_SCHOOLS);
+  const [selectedRoom, setselectedRoom] = useState(INITIAL_DATA_ROOMS);
+
+  const transformingResponseIntoValueAndLabelModelSchool = (data) => ({
     value: data.id,
     label: data.school,
   });
 
-  const mapResponseToValuesAndLabels2 = (data) => ({
+  const transformingResponseIntoValueAndLabelModelRoom = (data) => ({
     value: data.id,
     label: data.room,
   });
 
   async function callApiSchools() {
-    const data = await api.get("/test/school").then((response) => response.data.map(mapResponseToValuesAndLabels))
-    return data;
+    const response = await api.get("/test/school").then((response) => response.data.map(transformingResponseIntoValueAndLabelModelSchool))
+    setlistofSchools(response);
   }
 
   async function callApiRooms() {
-    const dados = { school_id: selectData.value }
-    const tt = await api.post("/test/room", dados).then((response) => response.data.map(mapResponseToValuesAndLabels2))
-    return tt;
+    const dados = { school_id: selectedSchool }
+    const response = await api.post("/test/room", dados).then((response) => response.data.map(transformingResponseIntoValueAndLabelModelRoom))
+    setlistofRooms(response);
   }
 
-  const handleRoomUser: SubmitHandler<CreateStudentsFormData> = async (values) => {
-
+  const handleStudentsUser: SubmitHandler<CreateStudentsFormData> = async (values) => {
+    const alunos = values.alunos.split("\n");
+    const school_id = selectedSchool;
+    const room_id = selectedRoom;
+    console.log(alunos);
+    console.log(school_id);
+    console.log(room_id);
   }
-
 
   const { errors } = formState;
 
-
-
+  function onChangeSchools(e) {
+    setselectedSchool(e.target.value);
+  }
+  function onChangeRoom(e) {
+    setselectedRoom(e.target.value);
+  }
 
   return (
     <Box>
@@ -82,53 +94,42 @@ export default function CreateStudents() {
       >
         <Sidebar />
 
-        <Box as="form" onSubmit={handleSubmit(handleRoomUser)} flex='1' borderRadius={8} bg="gray.800" p="8">
+        <Box as="form" onSubmit={handleSubmit(handleStudentsUser)} flex='1' borderRadius={8} bg="gray.800" p="8">
           <Heading size="lg" fontWeight="normal">Criar Sala</Heading>
           <Divider my="6" borderColor="gray.700" />
 
           <SimpleGrid marginBottom={["3"]}>Escola</SimpleGrid>
           <VStack spacing="8">
             <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
-              <AsyncSelect
-                cacheOptions
-                id="school_id"
-                instanceId="school_id"
-                autoFocus={true}
-                loadOptions={callApiSchools}
-                onChange={(data) => {
-                  setselectData(data);
-                  setisActive(true)
-                }}
-                value={selectData}
-                defaultOptions
-              />
+              <Select
+                placeholder='Selecione a Escola'
+                onClick={() => { callApiSchools() }}
+                onChange={onChangeSchools}
+                _active={{ bgColor: 'gray.900' }}
+              >
+                {listofSchools.map((data) => {
+                  return (
+                    <option key={data.value} value={data.value}>{data.label}</option>
+                  )
+                })}
+              </Select>
             </SimpleGrid>
           </VStack>
-
-          {selectData.value ? <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
-            <AsyncSelect
-              cacheOptions
-              id="school_id"
-              instanceId="school_id"
-              autoFocus={true}
-              loadOptions={callApiRooms}
-              onChange={(data) => {
-                setselectData2(data);
-              }}
-              value={selectData2}
-              defaultOptions
-            />
-          </SimpleGrid> : <></>}
 
           <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>Turma</SimpleGrid>
           <VStack spacing="8">
             <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
+              <Select placeholder='Selecione a Turma' onClick={() => { callApiRooms() }} onChange={onChangeRoom} >
+                {listofRooms.map((data) => {
+                  return (
+                    <option key={data.value} value={data.value}>{data.label}</option>
+                  )
+                })}
+              </Select>
             </SimpleGrid>
           </VStack>
 
           <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>Alunos</SimpleGrid>
-
-
           <VStack marginBottom={["3"]} spacing="8">
             <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
               <TextArea

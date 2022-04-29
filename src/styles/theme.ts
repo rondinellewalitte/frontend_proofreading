@@ -22,6 +22,14 @@ export const theme = extendTheme({
   styles: {
     global: {
       body: {
+        option: {
+
+          background: "#1f2029!important",
+          hover: {
+            background: "#ffffff!important"
+          },
+
+        },
         bg: 'gray.900',
         color: 'gray.50',
       },
