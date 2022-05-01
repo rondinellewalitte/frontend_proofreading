@@ -37,7 +37,7 @@ export default function CreateSchool() {
     }
   })
 
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(createSchoolFormSchema)
   })
 
@@ -51,8 +51,15 @@ export default function CreateSchool() {
     setErr({ status, message, open: true });
 
     if (status === 'success') {
-      router.reload();
+      reset();
+      DelayDialogError();
     }
+    DelayDialogError();
+  }
+
+  async function DelayDialogError() {
+    await delayTime(5);
+    setErr({ status: "", message: "", open: false });
   }
 
   const { errors } = formState;

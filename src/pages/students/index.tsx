@@ -1,4 +1,4 @@
-import { Box, Button, Text, Divider, Flex, Heading, HStack, SimpleGrid, VStack, Alert, AlertDescription, AlertTitle, AlertIcon, Select } from "@chakra-ui/react";
+import { Box, Button, Text, Divider, Flex, Heading, HStack, SimpleGrid, VStack, Alert, AlertDescription, AlertTitle, AlertIcon, Select, Radio, FormControl, FormErrorMessage, Stack, RadioGroup } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
 import { withSRRAuth } from "../../utils/withSRRAuth";
@@ -15,11 +15,24 @@ import { TextArea } from "../../components/Form/TextArea";
 
 type CreateStudentsFormData = {
   alunos: string;
+  type_test: string;
+
+}
+
+type CreateStudentFormData = {
+  student_name: string;
+  id_school: string;
+  id_room: string;
+  type_test: string;
 }
 
 const createRoomFormSchema = yup.object().shape({
   alunos: yup.string().required("Alunos são obrigatório"),
+  type_test: yup.string().nullable().required("Escolha uma Opção"),
+
+
 })
+
 
 export default function CreateStudents() {
 
@@ -40,8 +53,10 @@ export default function CreateStudents() {
   const [listofSchools, setlistofSchools] = useState([INITIAL_DATA_SCHOOLS]);
   const [listofRooms, setlistofRooms] = useState([INITIAL_DATA_ROOMS]);
 
-  const [selectedSchool, setselectedSchool] = useState(INITIAL_DATA_SCHOOLS);
-  const [selectedRoom, setselectedRoom] = useState(INITIAL_DATA_ROOMS);
+  const [selectedSchool, setselectedSchool] = useState("");
+  const [selectedRoom, setselectedRoom] = useState("");
+  const [err, setErr] = useState({ status: "", message: "", open: false });
+  const [valueG, setValueG] = useState('');
 
   const transformingResponseIntoValueAndLabelModelSchool = (data) => ({
     value: data.id,
@@ -64,16 +79,54 @@ export default function CreateStudents() {
     setlistofRooms(response);
   }
 
+  const createStudent = useMutation(async (student: CreateStudentFormData) => {
+
+    const response = await api.post("/test", student).catch((error: any) => {
+      return error.response;
+    })
+    return response;
+  }, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('users')
+    }
+  })
+
   const handleStudentsUser: SubmitHandler<CreateStudentsFormData> = async (values) => {
-    const alunos = values.alunos.split("\n");
-    const school_id = selectedSchool;
-    const room_id = selectedRoom;
-    console.log(alunos);
-    console.log(school_id);
-    console.log(room_id);
+
+    const alunos = values.alunos.split("\n").filter(Boolean);
+    const id_school = selectedSchool;
+    const id_room = selectedRoom;
+    const type_test = values.type_test;
+    console.log(type_test);
+
+    if (!id_school) {
+      setErr({ status: "Erro:", message: "Selecione a escola", open: true });
+      DelayDialogError();
+    } else {
+      if (!id_room || id_room === "0") {
+        setErr({ status: "Erro:", message: "Selecione a sala", open: true });
+        DelayDialogError();
+      } else {
+        if (alunos) {
+          for (const aluno of alunos) {
+            await createStudent.mutateAsync({ student_name: aluno, id_room, id_school, type_test });
+          }
+
+          setErr({ status: "success", message: "Alunos gravados com sucesso", open: true });
+          reset();
+          DelayDialogError();
+        }
+      }
+    }
   }
 
   const { errors } = formState;
+
+  async function DelayDialogError() {
+    await delayTime(5);
+    setErr({ status: "", message: "", open: false });
+  }
+
 
   function onChangeSchools(e) {
     setselectedSchool(e.target.value);
@@ -119,13 +172,37 @@ export default function CreateStudents() {
           <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>Turma</SimpleGrid>
           <VStack spacing="8">
             <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
+
               <Select placeholder='Selecione a Turma' onClick={() => { callApiRooms() }} onChange={onChangeRoom} >
                 {listofRooms.map((data) => {
                   return (
                     <option key={data.value} value={data.value}>{data.label}</option>
                   )
                 })}
+
+
               </Select>
+
+            </SimpleGrid>
+          </VStack>
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>Gabarito</SimpleGrid>
+          <VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl isInvalid={!!errors.type_test}>
+
+                <RadioGroup onChange={setValueG} value={valueG}>
+                  <Stack spacing={50} direction='row'>
+                    <Radio {...register("type_test")} value='1'>10</Radio>
+                    <Radio {...register("type_test")} value='2'>17</Radio>
+
+                    {!!errors.type_test && (
+                      <FormErrorMessage>
+                        {errors.type_test.message}
+                      </FormErrorMessage>
+                    )}
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
             </SimpleGrid>
           </VStack>
 
@@ -146,6 +223,29 @@ export default function CreateStudents() {
             </HStack>
           </Flex>
         </Box>
+        {!!err.status && (err.status !== "success" ?
+          <Alert
+            status='error'
+            variant='solid'
+            width={["80"]}
+            pos="absolute" bottom="-100" left="5"
+          >
+            <AlertIcon />
+            <AlertTitle textColor="white">{err.status}</AlertTitle>
+            <AlertDescription textColor="white">{err.message}</AlertDescription>
+          </Alert> :
+          <Alert
+            status='success'
+            variant='solid'
+            width={["80"]}
+            pos="absolute" bottom="-100" left="5"
+          >
+            <AlertIcon />
+            <AlertTitle textColor="white">{err.status}</AlertTitle>
+            <AlertDescription textColor="white">{err.message}</AlertDescription>
+          </Alert>
+
+        )}
       </Flex>
     </Box>
   );

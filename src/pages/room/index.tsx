@@ -28,26 +28,27 @@ export default function CreateRoom() {
     resolver: yupResolver(createRoomFormSchema)
   })
 
-  const INITIAL_DATA = {
-    value: 0,
-    label: 'Selecione o usuário',
-  };
+  const INITIAL_DATA_SCHOOLS = {
+    value: "0",
+    label: 'Selecione a escola',
+  }
 
-  const [selectData, setselectData] = useState(INITIAL_DATA);
+  const [listofSchools, setlistofSchools] = useState([INITIAL_DATA_SCHOOLS]);
+  const [selectedSchool, setselectedSchool] = useState("");
 
-  const mapResponseToValuesAndLabels = (data) => ({
+  const transformingResponseIntoValueAndLabelModelSchool = (data) => ({
     value: data.id,
     label: data.school,
   });
 
-  async function callApi() {
-    const data = await api.get("/test/school").then((response) => response.data.map(mapResponseToValuesAndLabels))
-    return data;
+  async function callApiSchools() {
+    const response = await api.get("/test/school").then((response) => response.data.map(transformingResponseIntoValueAndLabelModelSchool))
+    setlistofSchools(response);
   }
 
   const createRoom = useMutation(async (room: CreateRoomFormData) => {
 
-    const data = { room: room.room, school_id: selectData.value }
+    const data = { room: room.room, school_id: selectedSchool }
 
     const response = await api.post("/room", data).catch((error: any) => {
       return error.response;
@@ -62,22 +63,29 @@ export default function CreateRoom() {
   const [err, setErr] = useState({ status: "", message: "", open: false });
 
   const handleRoomUser: SubmitHandler<CreateRoomFormData> = async (values) => {
-    const response = await createRoom.mutateAsync(values);
+    if (selectedSchool) {
+      const response = await createRoom.mutateAsync(values);
+      const { status, message } = response.data
 
-    const { status, message } = response.data
+      setErr({ status, message, open: true });
 
-    setErr({ status, message, open: true });
-
-    if (status === 'success') {
-      setselectData(INITIAL_DATA);
-      reset();
+      if (status === 'success') {
+        reset();
+      }
+      DelayDialogError();
+    } else {
+      setErr({ status: "error", message: "Selecione a escola", open: true });
+      DelayDialogError();
     }
-    DelayDialogError();
   }
 
   async function DelayDialogError() {
     await delayTime(5);
     setErr({ status: "", message: "", open: false });
+  }
+
+  function onChangeSchools(e) {
+    setselectedSchool(e.target.value);
   }
 
   const { errors } = formState;
@@ -102,18 +110,18 @@ export default function CreateRoom() {
           <SimpleGrid marginBottom={["3"]}>Escola</SimpleGrid>
           <VStack spacing="8">
             <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
-              <AsyncSelect
-                cacheOptions
-                id="school_id"
-                instanceId="school_id"
-                autoFocus={true}
-                loadOptions={callApi}
-                onChange={(data) => {
-                  setselectData(data);
-                }}
-                value={selectData}
-                defaultOptions
-              />
+              <Select
+                placeholder='Selecione a Escola'
+                onClick={() => { callApiSchools() }}
+                onChange={onChangeSchools}
+                _active={{ bgColor: 'gray.900' }}
+              >
+                {listofSchools.map((data) => {
+                  return (
+                    <option key={data.value} value={data.value}>{data.label}</option>
+                  )
+                })}
+              </Select>
             </SimpleGrid>
             <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
               <Input
