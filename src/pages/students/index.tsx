@@ -2,7 +2,6 @@ import { Box, Button, Text, Divider, Flex, Heading, HStack, SimpleGrid, VStack, 
 import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
 import { withSRRAuth } from "../../utils/withSRRAuth";
-import AsyncSelect from 'react-select/async';
 import { useState } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup"
