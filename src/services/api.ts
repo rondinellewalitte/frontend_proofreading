@@ -11,7 +11,7 @@ export function setupAPIClient(ctx = undefined) {
   let cookies = parseCookies(ctx);
 
   const api = axios.create({
-    baseURL: "https://tatauigo.herokuapp.com",
+    baseURL: "https://cadastrodrr.com.br/tatauigo",
     headers: {
       Authorization: `Bearer ${cookies['token_dashgo']}`
     }
