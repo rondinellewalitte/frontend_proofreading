@@ -173,9 +173,6 @@ export default function Correction() {
     const id_school = selectedSchool;
     const id_room = selectedRoom;
     const id_student = selectedStudent;
-    console.log(id_school.length);
-    console.log(id_room);
-    console.log(id_student);
 
     if (!id_school.length) {
       console.log("passou")
@@ -192,6 +189,23 @@ export default function Correction() {
         } else {
           await updateStudent.mutateAsync(test);
           setErr({ status: "success", message: "Gabarito cadastrado com sucesso", open: true });
+          setanswer_01("");
+          setanswer_02("");
+          setanswer_03("");
+          setanswer_04("");
+          setanswer_05("");
+          setanswer_06("");
+          setanswer_07("");
+          setanswer_08("");
+          setanswer_09("");
+          setanswer_10("");
+          setanswer_11("");
+          setanswer_12("");
+          setanswer_13("");
+          setanswer_14("");
+          setanswer_15("");
+          setanswer_16("");
+          setanswer_17("");
           reset();
           DelayDialogError();
         }
