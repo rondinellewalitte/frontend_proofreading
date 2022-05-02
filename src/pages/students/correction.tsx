@@ -129,7 +129,7 @@ export default function Correction() {
   }
 
   async function callApiStudent() {
-    const dados = { school_id: selectedSchool, student_id: selectedStudent }
+    const dados = { school: selectedSchool, room: selectedRoom }
     const response = await api.post("/students", dados).then((response) => response.data.map(transformingResponseIntoValueAndLabelModelStudent))
     setlistofStudents(response);
   }
