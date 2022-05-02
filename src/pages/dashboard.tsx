@@ -91,7 +91,7 @@ export default function Dashboard() {
             borderRadius={8}
           >
             <Text fontSize="lg" mb="4">Alunos Cadastrados</Text>
-            <Chart type="area" options={options} series={series} height={160} />
+            <Text> Em construção</Text>
           </Box>
           <Box
             p={["6", "8"]}
@@ -99,7 +99,7 @@ export default function Dashboard() {
             borderRadius={8}
           >
             <Text fontSize="lg" mb="4">Alunos sem Notas</Text>
-            <Chart type="area" options={options} series={series} height={160} />
+            <Text> Em construção</Text>
           </Box>
         </SimpleGrid>
 

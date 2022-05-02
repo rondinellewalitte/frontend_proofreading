@@ -192,6 +192,7 @@ export default function Correction() {
         } else {
           await updateStudent.mutateAsync(test);
           setErr({ status: "success", message: "Gabarito cadastrado com sucesso", open: true });
+          reset();
           DelayDialogError();
         }
       }
