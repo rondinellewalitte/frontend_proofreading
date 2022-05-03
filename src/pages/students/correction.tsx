@@ -383,7 +383,9 @@ export default function Correction() {
           <VStack spacing="8">
             <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
               <FormControl isInvalid={!!errors.answer_01}>
-                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>Português</SimpleGrid>
+                <Divider my="6" borderColor="pink.500" />
+                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}><Text fontSize='2xl' color="whiteAlpha.900">Língua Portuguesa</Text></SimpleGrid>
+                <Divider my="6" borderColor="pink.500" />
                 <RadioGroup onChange={setanswer_01} value={answer_01}>
                   <Stack spacing={50} direction='row'>
                     <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>01)</SimpleGrid>
@@ -532,7 +534,9 @@ export default function Correction() {
           <VStack spacing="8">
             <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
               <FormControl isInvalid={!!errors.answer_06}>
-                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>Matemática</SimpleGrid>
+                <Divider my="6" borderColor="pink.500" />
+                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}><Text fontSize='2xl' color="whiteAlpha.900">Matemática</Text></SimpleGrid>
+                <Divider my="6" borderColor="pink.500" />
                 <RadioGroup onChange={setanswer_06} value={answer_06}>
                   <Stack spacing={50} direction='row'>
                     <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>01)</SimpleGrid>
@@ -682,7 +686,9 @@ export default function Correction() {
           <VStack spacing="8">
             <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
               <FormControl>
-                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>Ciência</SimpleGrid>
+                <Divider my="6" borderColor="pink.500" />
+                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}><Text fontSize='2xl' color="whiteAlpha.900">Ciência</Text></SimpleGrid>
+                <Divider my="6" borderColor="pink.500" />
                 <RadioGroup onChange={setanswer_11} value={answer_11}>
                   <Stack spacing={50} direction='row'>
                     <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>01)</SimpleGrid>
@@ -770,7 +776,9 @@ export default function Correction() {
           <VStack spacing="8">
             <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
               <FormControl>
-                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>Geografia</SimpleGrid>
+                <Divider my="6" borderColor="pink.500" />
+                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}><Text fontSize='2xl' color="whiteAlpha.900">Geografia</Text></SimpleGrid>
+                <Divider my="6" borderColor="pink.500" />
                 <RadioGroup onChange={setanswer_16} value={answer_16}>
                   <Stack spacing={50} direction='row'>
                     <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>01)</SimpleGrid>
@@ -855,7 +863,9 @@ export default function Correction() {
           <VStack spacing="8">
             <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
               <FormControl>
-                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>História</SimpleGrid>
+                <Divider my="6" borderColor="pink.500" />
+                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}><Text fontSize='2xl' color="whiteAlpha.900">História</Text></SimpleGrid>
+                <Divider my="6" borderColor="pink.500" />
                 <RadioGroup onChange={setanswer_21} value={answer_21}>
                   <Stack spacing={50} direction='row'>
                     <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>01)</SimpleGrid>
