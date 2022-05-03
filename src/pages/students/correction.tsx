@@ -31,19 +31,29 @@ type CreateTestFormData = {
   answer_15?: string;
   answer_16?: string;
   answer_17?: string;
+  answer_18?: string;
+  answer_19?: string;
+  answer_20?: string;
+  answer_21?: string;
+  answer_22?: string;
+  answer_23?: string;
+  answer_24?: string;
+  answer_25?: string;
+  answer_26?: string;
+  answer_27?: string;
+  answer_28?: string;
+  answer_29?: string;
 }
 
 const createStudentFormSchema = yup.object().shape({
-  answer_01: yup.string().nullable().required("Campo obrigatório"),
-  answer_02: yup.string().nullable().required("Campo obrigatório"),
-  answer_03: yup.string().nullable().required("Campo obrigatório"),
-  answer_04: yup.string().nullable().required("Campo obrigatório"),
-  answer_05: yup.string().nullable().required("Campo obrigatório"),
-  answer_06: yup.string().nullable().required("Campo obrigatório"),
-  answer_07: yup.string().nullable().required("Campo obrigatório"),
-  answer_08: yup.string().nullable().required("Campo obrigatório"),
-  answer_09: yup.string().nullable().required("Campo obrigatório"),
-  answer_10: yup.string().nullable().required("Campo obrigatório"),
+  answer_01: yup.string().nullable(),
+  answer_02: yup.string().nullable(),
+  answer_03: yup.string().nullable(),
+  answer_04: yup.string().nullable(),
+  answer_06: yup.string().nullable(),
+  answer_07: yup.string().nullable(),
+  answer_08: yup.string().nullable(),
+  answer_10: yup.string().nullable(),
 })
 
 export default function Correction() {
@@ -97,6 +107,19 @@ export default function Correction() {
   const [answer_15, setanswer_15] = useState("");
   const [answer_16, setanswer_16] = useState("");
   const [answer_17, setanswer_17] = useState("");
+  const [answer_18, setanswer_18] = useState("");
+  const [answer_19, setanswer_19] = useState("");
+  const [answer_20, setanswer_20] = useState("");
+  const [answer_21, setanswer_21] = useState("");
+  const [answer_22, setanswer_22] = useState("");
+  const [answer_23, setanswer_23] = useState("");
+  const [answer_24, setanswer_24] = useState("");
+  const [answer_25, setanswer_25] = useState("");
+  const [answer_26, setanswer_26] = useState("");
+  const [answer_27, setanswer_27] = useState("");
+  const [answer_28, setanswer_28] = useState("");
+  const [answer_29, setanswer_29] = useState("");
+
 
 
 
@@ -166,7 +189,19 @@ export default function Correction() {
       answer_14,
       answer_15,
       answer_16,
-      answer_17
+      answer_17,
+      answer_18,
+      answer_19,
+      answer_20,
+      answer_21,
+      answer_22,
+      answer_23,
+      answer_24,
+      answer_25,
+      answer_26,
+      answer_27,
+      answer_28,
+      answer_29,
     }
     await updateStudent.mutateAsync(test);
 
@@ -206,6 +241,18 @@ export default function Correction() {
           setanswer_15("");
           setanswer_16("");
           setanswer_17("");
+          setanswer_18("");
+          setanswer_19("");
+          setanswer_20("");
+          setanswer_21("");
+          setanswer_22("");
+          setanswer_23("");
+          setanswer_24("");
+          setanswer_25("");
+          setanswer_26("");
+          setanswer_27("");
+          setanswer_28("");
+          setanswer_29("");
           reset();
           DelayDialogError();
         }
@@ -249,6 +296,18 @@ export default function Correction() {
     setanswer_15(data.answer_15);
     setanswer_16(data.answer_16);
     setanswer_17(data.answer_17);
+    setanswer_18(data.answer_18);
+    setanswer_19(data.answer_19);
+    setanswer_20(data.answer_20);
+    setanswer_21(data.answer_21);
+    setanswer_22(data.answer_22);
+    setanswer_23(data.answer_23);
+    setanswer_24(data.answer_24);
+    setanswer_25(data.answer_25);
+    setanswer_26(data.answer_26);
+    setanswer_27(data.answer_27);
+    setanswer_28(data.answer_28);
+    setanswer_29(data.answer_29);
 
     if (dataStudent[1] === "2") {
       setselectedType(true)
@@ -438,7 +497,7 @@ export default function Correction() {
               <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
                 <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
                   <FormControl isInvalid={!!errors.answer_11}>
-                    <RadioGroup onChange={setanswer_11} value={answer_11}>
+                    <RadioGroup onChange={setanswer_26} value={answer_26}>
                       <Stack spacing={50} direction='row'>
                         <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>06)</SimpleGrid>
                         <Radio value='1'>A</Radio>
@@ -454,7 +513,7 @@ export default function Correction() {
               <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
                 <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
                   <FormControl >
-                    <RadioGroup onChange={setanswer_12} value={answer_12}>
+                    <RadioGroup onChange={setanswer_27} value={answer_27}>
                       <Stack spacing={50} direction='row'>
                         <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>07)</SimpleGrid>
                         <Radio value='1'>A</Radio>
@@ -588,7 +647,7 @@ export default function Correction() {
               <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
                 <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
                   <FormControl >
-                    <RadioGroup onChange={setanswer_13} value={answer_13}>
+                    <RadioGroup onChange={setanswer_28} value={answer_28}>
                       <Stack spacing={50} direction='row'>
                         <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>06)</SimpleGrid>
                         <Radio value='1'>A</Radio>
@@ -604,7 +663,7 @@ export default function Correction() {
               <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
                 <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
                   <FormControl>
-                    <RadioGroup onChange={setanswer_14} value={answer_14}>
+                    <RadioGroup onChange={setanswer_29} value={answer_29}>
                       <Stack spacing={50} direction='row'>
                         <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>07)</SimpleGrid>
                         <Radio value='1'>A</Radio>
@@ -616,49 +675,84 @@ export default function Correction() {
                   </FormControl>
                 </SimpleGrid>
               </VStack>
+            </>
+          )}
 
-              <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid>
-              <VStack spacing="8">
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid>
+          <VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl>
+                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>Ciência</SimpleGrid>
+                <RadioGroup onChange={setanswer_11} value={answer_11}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>01)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+
+
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl >
+                <RadioGroup onChange={setanswer_12} value={answer_12}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>02)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+
+
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl>
+                <RadioGroup onChange={setanswer_13} value={answer_13}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>03)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+          {!selectedType && (
+            <>
+              <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
                 <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
                   <FormControl>
-                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>Ciencia</SimpleGrid>
+                    <RadioGroup onChange={setanswer_14} value={answer_14}>
+                      <Stack spacing={50} direction='row'>
+                        <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>04)</SimpleGrid>
+                        <Radio value='1'>A</Radio>
+                        <Radio value='2'>B</Radio>
+                        <Radio value='3'>C</Radio>
+                        <Radio value='4'>D</Radio>
+                      </Stack>
+                    </RadioGroup>
+                  </FormControl>
+                </SimpleGrid>
+              </VStack>
+
+              <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
+                <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+                  <FormControl>
                     <RadioGroup onChange={setanswer_15} value={answer_15}>
                       <Stack spacing={50} direction='row'>
-                        <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>01)</SimpleGrid>
-                        <Radio value='1'>A</Radio>
-                        <Radio value='2'>B</Radio>
-                        <Radio value='3'>C</Radio>
-                        <Radio value='4'>D</Radio>
-                      </Stack>
-                    </RadioGroup>
-                  </FormControl>
-                </SimpleGrid>
-              </VStack>
-
-
-              <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
-                <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
-                  <FormControl >
-                    <RadioGroup onChange={setanswer_16} value={answer_16}>
-                      <Stack spacing={50} direction='row'>
-                        <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>02)</SimpleGrid>
-                        <Radio value='1'>A</Radio>
-                        <Radio value='2'>B</Radio>
-                        <Radio value='3'>C</Radio>
-                        <Radio value='4'>D</Radio>
-                      </Stack>
-                    </RadioGroup>
-                  </FormControl>
-                </SimpleGrid>
-              </VStack>
-
-
-              <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
-                <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
-                  <FormControl>
-                    <RadioGroup onChange={setanswer_17} value={answer_17}>
-                      <Stack spacing={50} direction='row'>
-                        <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>03)</SimpleGrid>
+                        <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>05)</SimpleGrid>
                         <Radio value='1'>A</Radio>
                         <Radio value='2'>B</Radio>
                         <Radio value='3'>C</Radio>
@@ -670,6 +764,178 @@ export default function Correction() {
               </VStack>
             </>
           )}
+
+
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid>
+          <VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl>
+                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>Geografia</SimpleGrid>
+                <RadioGroup onChange={setanswer_16} value={answer_16}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>01)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+
+
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl >
+                <RadioGroup onChange={setanswer_17} value={answer_17}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>02)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+
+
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl>
+                <RadioGroup onChange={setanswer_18} value={answer_18}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>03)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl>
+                <RadioGroup onChange={setanswer_19} value={answer_19}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>04)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl>
+                <RadioGroup onChange={setanswer_20} value={answer_20}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>05)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+
+
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid>
+          <VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl>
+                <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>História</SimpleGrid>
+                <RadioGroup onChange={setanswer_21} value={answer_21}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>01)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+
+
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl >
+                <RadioGroup onChange={setanswer_22} value={answer_22}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>02)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+
+
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl>
+                <RadioGroup onChange={setanswer_23} value={answer_23}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>03)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl>
+                <RadioGroup onChange={setanswer_24} value={answer_24}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>04)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+
+          <SimpleGrid marginBottom={["3"]} marginTop={["3"]}></SimpleGrid><VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing="10" w="100%">
+              <FormControl>
+                <RadioGroup onChange={setanswer_25} value={answer_25}>
+                  <Stack spacing={50} direction='row'>
+                    <SimpleGrid marginBottom={["3"]} marginTop={["3"]}>05)</SimpleGrid>
+                    <Radio value='1'>A</Radio>
+                    <Radio value='2'>B</Radio>
+                    <Radio value='3'>C</Radio>
+                    <Radio value='4'>D</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
+            </SimpleGrid>
+          </VStack>
+
+
           <Flex mt="8" justify="flex-end">
             <HStack spacing="4">
               <Button colorScheme="whiteAlpha" >Cancelar</Button>
@@ -678,31 +944,33 @@ export default function Correction() {
           </Flex>
         </Box>
 
-        {!!err.status && (err.status !== "success" ?
-          <Alert
-            status='error'
-            variant='solid'
-            width={["80"]}
-            pos="absolute" bottom="10" left="5"
-          >
-            <AlertIcon />
-            <AlertTitle textColor="white">{err.status}</AlertTitle>
-            <AlertDescription textColor="white">{err.message}</AlertDescription>
-          </Alert> :
-          <Alert
-            status='success'
-            variant='solid'
-            width={["80"]}
-            pos="absolute" bottom="10" left="5"
-          >
-            <AlertIcon />
-            <AlertTitle textColor="white">{err.status}</AlertTitle>
-            <AlertDescription textColor="white">{err.message}</AlertDescription>
-          </Alert>
-        )}
-      </Flex>
+        {
+          !!err.status && (err.status !== "success" ?
+            <Alert
+              status='error'
+              variant='solid'
+              width={["80"]}
+              pos="absolute" bottom="10" left="5"
+            >
+              <AlertIcon />
+              <AlertTitle textColor="white">{err.status}</AlertTitle>
+              <AlertDescription textColor="white">{err.message}</AlertDescription>
+            </Alert> :
+            <Alert
+              status='success'
+              variant='solid'
+              width={["80"]}
+              pos="absolute" bottom="10" left="5"
+            >
+              <AlertIcon />
+              <AlertTitle textColor="white">{err.status}</AlertTitle>
+              <AlertDescription textColor="white">{err.message}</AlertDescription>
+            </Alert>
+          )
+        }
+      </Flex >
 
-    </Box>
+    </Box >
   );
 }
 
