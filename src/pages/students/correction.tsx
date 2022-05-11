@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { queryClient } from "../../services/queryClient";
+import { useRouter } from "next/router";
 
 
 type CreateTestFormData = {
@@ -57,7 +58,7 @@ const createStudentFormSchema = yup.object().shape({
 })
 
 export default function Correction() {
-
+  const router = useRouter();
 
   const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(createStudentFormSchema)
@@ -253,8 +254,9 @@ export default function Correction() {
           setanswer_27("");
           setanswer_28("");
           setanswer_29("");
-          reset();
+
           DelayDialogError();
+          router.reload();
         }
       }
     }
